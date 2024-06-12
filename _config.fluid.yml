@@ -1073,6 +1073,7 @@ about:
     - { class: "iconfont icon-instagram-fill", link: "https://www.instagram.com/yhoauann/", tip: "Instagram"}
     - { class: "iconfont icon-telegram-fill", link: "https://t.me/yhoauann", tip: "Telegram" }
     - { class: "iconfont icon-mail", link: "mailto:sakai@yhoauann.cn", tip: "Email" }
+    - { class: "iconfont icon-rss", link: "/atom.xml", tip: "RSS" }
 
 #---------------------------
 # 自定义页
