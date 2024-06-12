@@ -3,7 +3,7 @@
 ## Source: https://github.com/hexojs/hexo/
 
 # Site
-title: 伊霍安的数字花园🌺
+title: 伊霍安的数字花园
 subtitle: ''
 description: ''
 keywords:
@@ -107,3 +107,7 @@ feed:
     type: atom
     path: atom.xml
     limit: false
+
+aplayer:
+  meting: true
+  asset_inject: false
