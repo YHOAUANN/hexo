@@ -1,5 +1,6 @@
 ---
 title: sql基础
+date: 2024-06-12 18:21:23
 categories: 
 - 技术
 - 数据库
