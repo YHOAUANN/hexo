@@ -8,3 +8,4 @@ date: 2024-04-21 12:10:06
 
 [伊霍安的Note🌱](https://garden.yhoauann.cn/)
 
+[音乐](https://music.yhoauann.cn/)
