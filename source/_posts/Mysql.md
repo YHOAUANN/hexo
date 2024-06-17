@@ -13,11 +13,111 @@ tags:
 
 
 {% note success %}
-	最后更新时间：2024年6月14日 13:48:30
+	最后更新时间：2024年6月17日 14:18:30
 {% endnote %}
 
+# 选择语句
 
-#  存储过程
+### 选择子句
+
+### WHERE子句
+
+### AND、OR、NOT运算符
+
+### IN运算符
+
+### BETWEEN运算符
+
+### LIKE运算符
+
+### REGEXP运算符
+
+### NULL运算符
+
+### ORDER BY子句
+
+### LIMIT子句
+
+# 内连接
+
+### 跨表连接
+
+### 自连接
+
+### 多表连接
+
+### 复合连接
+
+### 隐式连接
+
+### USING子句
+
+### 自然连接
+
+### 交叉连接
+
+### 联合
+
+# 增删改
+
+### 插入数据
+
+### 更新数据
+
+### 删除数据
+
+# 聚合函数
+
+### GROUP BY子句
+
+### HAVING子句
+
+### ROLLUP运算符
+
+# 复杂查询
+
+### 子查询
+
+### IN运算符
+
+### ALL关键字
+
+### ANY关键字
+
+### 相关子查询
+
+### EXISTS运算符
+
+### SELEC子句中的子查询
+
+### FROM子句中的子查询
+
+# 数值函数
+
+### 字符串函数
+
+### 日期函数
+
+### IFNULL函数和COALESCE函数
+
+### IF函数
+
+### CASE运算符
+
+# 视图
+
+### 创建视图
+
+### 更改或删除视图
+
+### WITH OPTION CHECK子句
+
+
+
+
+
+
+# 存储过程
 
 存储过程身一个包含一堆SQL代码的数据库对象，在我们的应用代码里，我们调用这些过程来获取或者保存数据，所以我们使用存储过程来存储和挂历SQL代码
 
@@ -98,7 +198,7 @@ DELIMITER ;
 CALL get_clients(NULL)
 ```
 
-###　参数验证
+### 参数验证
 
 ```mysql
 DELIMITER $$
@@ -158,6 +258,81 @@ BEGIN
     SET risk_factor = invoices_total - invoices_count * 5;
     SELECT risk_factor;
 END $$
+
+DELIMITER ;
+```
+### 函数
+
+```mysql
+DELIMITER $$
+CREATE FUNCTION get_risk_factor_for_client
+(
+	client_id INT
+)
+RETURNS INTEGER
+READS SQK DATA
+BEGIN
+	DECLARE risk_factor DECIMAL(9,2) DEFAULT 0;
+    DECLARE invoices_total DECIMAL(9,2);
+    DECLARE invoices_count INT;
+    
+    SELECT COUNT(*), SUM(invoice_total)
+    INTO invoices_count,invoices_total
+    FROM invoices i
+	WHERE i.client_id = client_id;
+    
+    SET risk_factor = invoices_total - invoices_count * 5;
+    SELECT risk_factor;
+
+	RETURN IFNULL(risk_factor,0);
+END
+```
+# 触发器
+
+### 创建触发器
+```mysql
+DELIMITER $$
+
+CREATE TRIGGER payment_after_insert
+	AFTER INSERT ON payments
+    FOR EACH ROW
+BEGIN
+	UPDATE invoices
+    SET payment_total = payment_total + NEW.amount
+    WHERE invoice_id = NEW.invoice_id;
+END $$
+
+DELIMITER ;	
+```
+### 查看触发器
+
+```mysql
+SHOW TRIGGERS;
+```
+
+### 删除触发器
+
+```mysql
+DROP TRIGGER payment_after_insert
+```
+
+### 记录触发器
+
+```mysql
+DELIMITER $$
+
+CREATE TRIGGER payment_after_insert
+	AFTER INSERT ON payments
+    FOR EACH ROW
+BEGIN
+	UPDATE invoices
+    SET payment_total = payment_total + NEW.amount
+    WHERE invoice_id = NEW.invoice_id;
+    
+    INSERT INTO payments_audit
+    VALUES (NEW.client_id, NEW.date, NEW.amount, 'Insert', NOW());
+END $$
+
 
 DELIMITER ;
 ```
