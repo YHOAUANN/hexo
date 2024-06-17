@@ -17,105 +17,377 @@ tags:
 {% endnote %}
 
 # 选择语句
+```mysql
+SELECT *
+FROM table_name;
+```
 
 ### 选择子句
 
+```mysql
+SELECT (column1, column2, column3)
+FROM table_name;
+```
+
 ### WHERE子句
+
+```mysql
+SELECT *
+FROM table_name
+WHERE condition;
+```
 
 ### AND、OR、NOT运算符
 
+```mysql
+SELECT *	
+FROM table_name
+WHERE condition1 AND condition2;
+
+SELECT *	
+FROM table_name
+WHERE condition1 OR condition2;
+
+SELECT *	
+FROM table_name
+WHERE NOT condition;
+```
+
 ### IN运算符
+
+```mysql
+SELECT *	
+FROM table_name
+WHERE column IN (value1, value2, value3);
+```
 
 ### BETWEEN运算符
 
+```mysql
+SELECT *	
+FROM table_name
+WHERE column BETWEEN value1 AND value2;
+```
+
 ### LIKE运算符
+
+```mysql
+SELECT *	
+FROM table_name
+WHERE column LIKE pattern;
+```
 
 ### REGEXP运算符
 
+```mysql
+SELECT *	
+FROM table_name
+WHERE column REGEXP pattern;
+```
+
 ### NULL运算符
+
+```mysql	
+SELECT *	
+FROM table_name
+WHERE column IS NULL;
+```
 
 ### ORDER BY子句
 
+```mysql
+SELECT *	
+FROM table_name
+ORDER BY column1, column2;
+```
+
 ### LIMIT子句
 
-# 内连接
+```mysql
+SELECT *		
+FROM table_name
+LIMIT number;
+```
+
+# 内连接	
+
+```mysql
+SELECT *
+FROM table1 t1
+INNER JOIN table2 t2
+ON t1.column1 = t2.column1;
+```
 
 ### 跨表连接
 
+```mysql
+SELECT *
+FROM table1 t1
+CROSS JOIN table2 t2;
+```
+
 ### 自连接
+
+```mysql
+SELECT *
+FROM table1 t1, table1 t2
+WHERE t1.column1 = t2.column1;
+```
 
 ### 多表连接
 
+```mysql
+SELECT *
+FROM table1 t1
+JOIN table2 t2
+ON t1.column1 = t2.column1
+JOIN table3 t3
+ON t1.column1 = t3.column1;
+```
+
 ### 复合连接
+
+```mysql	
+SELECT *
+FROM table1 t1
+JOIN table2 t2
+ON t1.column1 = t2.column1
+JOIN table3 t3
+ON t1.column1 = t3.column1
+WHERE t1.column2 = 'value1'
+AND t2.column2 = 'value2'
+AND t3.column2 = 'value3';
+```
+
 
 ### 隐式连接
 
+```mysql
+SELECT *
+FROM table1 t1, table2 t2
+WHERE t1.column1 = t2.column1;
+```
 ### USING子句
+
+```mysql
+SELECT *
+FROM table1 t1
+JOIN table2 t2
+USING (column1);
+```
 
 ### 自然连接
 
+```mysql
+SELECT *
+FROM table1 t1
+NATURAL JOIN table2 t2;
+```
 ### 交叉连接
 
+```mysql
+SELECT *
+FROM table1 t1
+CROSS JOIN table2 t2;
+```
+
 ### 联合
+
+```mysql
+SELECT *
+FROM table1 t1
+UNION
+SELECT *
+FROM table2 t2;
+```
 
 # 增删改
 
 ### 插入数据
 
+```mysql
+INSERT INTO table_name (column1, column2, column3)
+VALUES (value1, value2, value3);
+```
+
 ### 更新数据
 
+```mysql
+UPDATE table_name	
+SET column1 = value1, column2 = value2, column3 = value3
+WHERE condition;
+```
 ### 删除数据
 
+```mysql
+DELETE FROM table_name
+WHERE condition;
+```
 # 聚合函数
-
+	
 ### GROUP BY子句
+	 
+```mysql
+SELECT column1, column2, SUM(column3)
+FROM table_name
+GROUP BY column1, column2;
+```
 
 ### HAVING子句
 
+```mysql	
+SELECT column1, column2, SUM(column3)
+FROM table_name
+GROUP BY column1, column2
+HAVING condition;
+```
+
 ### ROLLUP运算符
+
+```mysql
+SELECT column1, column2, SUM(column3)
+FROM table_name
+GROUP BY ROLLUP(column1, column2);
+```
 
 # 复杂查询
 
 ### 子查询
 
+```mysql
+SELECT *
+FROM table1 t1
+WHERE column1 = (SELECT column2 FROM table2 t2 WHERE t1.column1 = t2.column1);
+```
+
 ### IN运算符
 
+```mysql	
+SELECT *
+FROM table1 t1
+WHERE column1 IN (SELECT column2 FROM table2 t2 WHERE t1.column1 = t2.column1);
+```	
+
 ### ALL关键字
+```mysql
+SELECT *
+FROM table1 t1
+WHERE column1 = ALL (SELECT column2 FROM table2 t2 WHERE t1.column1 = t2.column1);
+```
 
 ### ANY关键字
 
+```mysql
+SELECT *
+FROM table1 t1
+WHERE column1 = ANY (SELECT column2 FROM table2 t2 WHERE t1.column1 = t2.column1);
+```
+
 ### 相关子查询
+
+```mysql	
+SELECT *
+FROM table1 t1
+WHERE column1 = (SELECT column2 FROM table2 t2 WHERE t1.column1 = t2.column1)
+AND column3 = (SELECT column4 FROM table3 t3 WHERE t1.column1 = t3.column1);
+```
 
 ### EXISTS运算符
 
+```mysql
+SELECT *
+FROM table1 t1
+WHERE EXISTS (SELECT * FROM table2 t2 WHERE t1.column1 = t2.column1);
+```	
+
 ### SELEC子句中的子查询
+
+```mysql
+SELECT *
+FROM table1 t1
+WHERE column1 IN (SELECT column2 FROM table2 t2 WHERE t1.column1 = t2.column1)
+AND column3 = (SELECT column4 FROM table3 t3 WHERE t1.column1 = t3.column1);
+```
 
 ### FROM子句中的子查询
 
+```mysql
+SELECT *
+FROM (SELECT column1, column2 FROM table1) t1
+WHERE column1 IN (SELECT column2 FROM table2 t2 WHERE t1.column1 = t2.column1);
+```
 # 数值函数
 
 ### 字符串函数
-
+```mysql
+SELECT LENGTH(column1), UPPER(column2), LOWER(column3), SUBSTRING(column4, 1, 5), REPLACE(column5, 'old', 'new')
+FROM table_name;
+```
 ### 日期函数
+
+```mysql
+SELECT CURDATE(), CURTIME(), NOW(), DATE_FORMAT(NOW(), '%Y-%m-%d %H:%i:%s'), TIMESTAMP(NOW()), TIMESTAMP('2024-06-12 18:21:23'), DATEDIFF(NOW(), '2024-06-12 18:21:23'), DATE_ADD(NOW(), INTERVAL 1 DAY), DATE_SUB(NOW(), INTERVAL 1 DAY)
+FROM table_name;
+```
 
 ### IFNULL函数和COALESCE函数
 
+```mysql	
+SELECT IFNULL(column1, 'default_value')
+FROM table_name;
+
+SELECT COALESCE(column1, column2, column3)
+FROM table_name;
+```
+
 ### IF函数
 
+```mysql
+SELECT IF(column1 > 10, 'greater than 10', 'less than or equal to 10')
+FROM table_name;
+```
 ### CASE运算符
 
-# 视图
+```mysql
+SELECT CASE column1
+    WHEN value1 THEN 'value1'
+    WHEN value2 THEN 'value2'
+    ELSE 'other'
+END
+FROM table_name;
+```
 
+# 视图
+	
 ### 创建视图
+
+```mysql
+CREATE VIEW view_name AS
+SELECT column1, column2, column3
+FROM table_name
+WHERE condition;
+```
 
 ### 更改或删除视图
 
+```mysql
+ALTER VIEW view_name AS
+SELECT column1, column2, column3
+FROM table_name
+WHERE condition;
+
+
+DROP VIEW view_name;
+```
 ### WITH OPTION CHECK子句
 
-
-
-
-
+```mysql
+CREATE VIEW view_name AS
+SELECT column1, column2, column3
+FROM table_name
+WHERE condition
+WITH CHECK OPTION;
+```
 
 # 存储过程
 
