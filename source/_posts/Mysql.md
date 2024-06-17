@@ -6,8 +6,15 @@ categories:
 - 数据库
 tags:
 - sql
+
 ---
 
+
+
+
+{% note success %}
+	最后更新时间：2024年6月14日 13:48:30
+{% endnote %}
 
 
 #  存储过程
@@ -91,5 +98,67 @@ DELIMITER ;
 CALL get_clients(NULL)
 ```
 
+###　参数验证
 
+```mysql
+DELIMITER $$
+CREATE PROCEDURE make_payment
+(
+	invoices_id INT,
+    payment_amount DECIMAL(9,2),
+    payment_date DATE
+)
+BEGIN
+	IF payment_amount < 0 THEN 
+		SIGNAL SQLSTATE '22003' 
+			SET MESSAGE_TEXT = 'Invalid payment amount';
+    END IF;
+	UPDATE invoices i
+    SET 
+		i.payment_total = payment_amount,
+        i.payment_date = payment_date
+	WHERE i.invoice_id = invoice_id;
+END $$
+
+DELIMITER ;
+```
+
+### 输出参数
+
+```mysql
+DELIMITER $$
+CREATE PROCEDURE get_unpaid_invoices_for_client
+(
+	client_id INT
+)
+BEGIN
+	SELECT COUNT(*),SUM(invoice_total)
+    FROM invoices i
+    WHERE i.client_id = client_id
+		AND payment_total = 0;
+END $$
+
+DELIMITER ;
+```
+
+### 变量
+
+```mysql
+DELIMITER $$
+CREATE PROCEDURE get_risk_factor()
+BEGIN
+	DECLARE risk_factor DECIMAL(9,2) DEFAULT 0;
+    DECLARE invoices_total DECIMAL(9,2);
+    DECLARE invoices_count INT;
+    
+    SELECT COUNT(*), SUM(invoice_total)
+    INTO invoices_count,invoices_total
+    FROM invoices;
+    
+    SET risk_factor = invoices_total - invoices_count * 5;
+    SELECT risk_factor;
+END $$
+
+DELIMITER ;
+```
 

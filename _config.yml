@@ -111,3 +111,47 @@ feed:
 aplayer:
   meting: true
   asset_inject: false
+
+douban:
+  id: 243293247
+  builtin: false
+  dynamic: false
+  item_per_page: 10
+  meta_max_line: 4
+  customize_layout: page
+  book:
+    path: books/index.html
+    title: "书籍"
+    quote: ""
+    actions:
+      - do
+      - wish
+      - collect
+    option:
+  movie:
+    path: movies/index.html
+    title: "电影"
+    quote: ""
+    actions:
+      - do
+      - wish
+      - collect
+    option:
+  game:
+    path: games/index.html
+    title: "游戏"
+    quote: ""
+    actions:
+      - do
+      - wish
+      - collect
+    option:
+  song:
+    path: songs/index.html
+    title: "音乐"
+    quote: ""
+    actions:
+      - do
+      - wish
+      - collect
+    option:
